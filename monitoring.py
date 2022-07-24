@@ -40,8 +40,8 @@ while True:
 
     ip = psutil.net_if_addrs()[net][0].address
 
-    if !("." in ip) 
-        ip = "<<ip>>"
+    if "." not in ip: 
+        ip = "127.0.0.1"
 
     temp = psutil.sensors_temperatures()["cpu_thermal"][0].current
     load = psutil.getloadavg()[0]
