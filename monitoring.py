@@ -3,6 +3,7 @@
 import time
 import subprocess
 import psutil
+import os
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 
@@ -31,9 +32,9 @@ draw = ImageDraw.Draw(image)
 # Draw a black filled box to clear the image.
 draw.rectangle((0,0,width,height), outline=0, fill=0)
 
-roboto = ImageFont.truetype('roboto/Roboto-Regular.ttf', 15)
-roboto_thin = ImageFont.truetype('roboto/RobotoMono-Thin.ttf', 11)
-roboto_black = ImageFont.truetype('roboto/Roboto-Black.ttf', 15)
+roboto = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Roboto-Regular.ttf'), 15)
+roboto_thin = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/RobotoMono-Thin.ttf'), 11)
+roboto_black = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Roboto-Black.ttf'), 15)
 
 hostname = subprocess.check_output('hostname').decode()
 ip = subprocess.check_output('hostname -I', shell=True).decode()
