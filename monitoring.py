@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 
 import time
-import subprocess
-import psutil
-import os
+import psutil, os
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_SSD1306
 
-from gpiozero import CPUTemperature, LoadAverage
 from PIL import Image, ImageDraw, ImageFont
 
 # 128x32 display with hardware I2C:
 disp = Adafruit_SSD1306.SSD1306_128_32(rst=None)
+net = "eth0"
 
 # Initialize library.
 disp.begin()
@@ -36,14 +34,13 @@ roboto = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Robo
 roboto_thin = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/RobotoMono-Thin.ttf'), 11)
 roboto_black = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Roboto-Black.ttf'), 15)
 
-hostname = subprocess.check_output('hostname').decode()
+hostname = os.uname().nodename
+ip = psutil.net_if_addrs()[net][0].address
 
 while True:
 
-    ip = subprocess.check_output('hostname -I', shell=True).decode()
-
-    tmp = CPUTemperature()
-    load = LoadAverage(minutes=1)
+    tmp = psutil.sensors_temperatures()["cpu_thermal"][0].current
+    load = psutil.getloadavg()[0]
     memory = psutil.virtual_memory().percent
 
     draw.rectangle((0,0,width,height), outline=0, fill=0)
@@ -53,9 +50,10 @@ while True:
 
     draw.text((70,  0), "CPU:{:.0f}%".format(load.load_average * 100), font=roboto_thin, fill=255)
     draw.text((70, 10), "MEM:{:.0f}%".format(memory), font=roboto_thin, fill=255)
-    draw.text((70, 20), "TMP:{:.0f}°C".format(tmp.temperature), font=roboto_thin, fill=255)
+    draw.text((70, 20), "TEM:{:.0f}°C".format(tmp.temperature), font=roboto_thin, fill=255)
 
     # Display image
     disp.image(image)
     disp.display()
+
     time.sleep(2)
