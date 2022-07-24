@@ -15,9 +15,9 @@ git clone https://github.com/jvaclavovic/uctronics_ssd1306.git
 sudo raspi-config nonint do_i2c 0
 ```
 
-Insert into fie etc/rc.local:
+Insert into file /etc/rc.local:
 
 ```
-python3 /home/users/pi/monitoring.py > /dev/null
+/usr/bin/python3 /home/pi/uctronics_ssd1306/monitoring.py &
 ```
 
