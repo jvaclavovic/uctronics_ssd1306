@@ -35,9 +35,13 @@ roboto_thin = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto
 roboto_black = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Roboto-Black.ttf'), 15)
 
 hostname = os.uname().nodename
-ip = psutil.net_if_addrs()[net][0].address
 
 while True:
+
+    ip = psutil.net_if_addrs()[net][0].address
+
+    if !("." in ip) 
+        ip = "<<ip>>"
 
     temp = psutil.sensors_temperatures()["cpu_thermal"][0].current
     load = psutil.getloadavg()[0]
