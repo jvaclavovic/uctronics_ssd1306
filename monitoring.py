@@ -39,7 +39,7 @@ ip = psutil.net_if_addrs()[net][0].address
 
 while True:
 
-    tmp = psutil.sensors_temperatures()["cpu_thermal"][0].current
+    temp = psutil.sensors_temperatures()["cpu_thermal"][0].current
     load = psutil.getloadavg()[0]
     memory = psutil.virtual_memory().percent
 
@@ -48,9 +48,9 @@ while True:
     draw.text((0,  0), ip, font=roboto, fill=255)
     draw.text((0, 15), hostname, font=roboto_black, fill=255)
 
-    draw.text((70,  0), "CPU:{:.0f}%".format(load.load_average * 100), font=roboto_thin, fill=255)
+    draw.text((70,  0), "CPU:{:.0f}%".format(load * 100), font=roboto_thin, fill=255)
     draw.text((70, 10), "MEM:{:.0f}%".format(memory), font=roboto_thin, fill=255)
-    draw.text((70, 20), "TEM:{:.0f}°C".format(tmp.temperature), font=roboto_thin, fill=255)
+    draw.text((70, 20), "TEM:{:.0f}°C".format(temp), font=roboto_thin, fill=255)
 
     # Display image
     disp.image(image)
