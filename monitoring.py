@@ -37,9 +37,10 @@ roboto_thin = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto
 roboto_black = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'roboto/Roboto-Black.ttf'), 15)
 
 hostname = subprocess.check_output('hostname').decode()
-ip = subprocess.check_output('hostname -I', shell=True).decode()
 
 while True:
+
+    ip = subprocess.check_output('hostname -I', shell=True).decode()
 
     tmp = CPUTemperature()
     load = LoadAverage(minutes=1)
